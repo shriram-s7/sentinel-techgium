@@ -1,0 +1,108 @@
+{
+ "heat": {
+  "n": 30,
+  "det": 30,
+  "fa": 0,
+  "wrong": 0,
+  "med": 29,
+  "mx": 57,
+  "missed": []
+ },
+ "noise": {
+  "n": 30,
+  "det": 27,
+  "fa": 0,
+  "wrong": 0,
+  "med": 4,
+  "mx": 15,
+  "missed": [
+   {
+    "M": 7.716,
+    "amp": 0.595,
+    "rate": 0.004,
+    "step": 1.052,
+    "bus_len": 180,
+    "intermittent": 1
+   },
+   {
+    "M": 10.07,
+    "amp": 0.531,
+    "rate": 0.014,
+    "step": 1.78,
+    "bus_len": 112,
+    "intermittent": 1
+   },
+   {
+    "M": 7.688,
+    "amp": 0.521,
+    "rate": 0.012,
+    "step": 5.885,
+    "bus_len": 64,
+    "intermittent": 1
+   }
+  ]
+ },
+ "bus": {
+  "n": 30,
+  "det": 30,
+  "fa": 0,
+  "wrong": 0,
+  "med": 2,
+  "mx": 17,
+  "missed": []
+ },
+ "drift": {
+  "n": 30,
+  "det": 30,
+  "fa": 0,
+  "wrong": 0,
+  "med": 49,
+  "mx": 155,
+  "missed": []
+ },
+ "power": {
+  "n": 30,
+  "det": 29,
+  "fa": 0,
+  "wrong": 0,
+  "med": 9,
+  "mx": 22,
+  "missed": [
+   {
+    "M": 9.855,
+    "amp": 1.867,
+    "rate": 0.007,
+    "step": 1.34,
+    "bus_len": 201,
+    "intermittent": 1
+   }
+  ]
+ },
+ "normal": {
+  "n": 30,
+  "det": 0,
+  "fa": 0,
+  "wrong": 0,
+  "med": null,
+  "mx": null,
+  "missed": []
+ },
+ "_faultfree_s": 64764,
+ "_plain": {
+  "heat": {
+   "det": 25,
+   "fa": 2,
+   "med": 46
+  },
+  "drift": {
+   "det": 21,
+   "fa": 0,
+   "med": 122
+  },
+  "normal": {
+   "det": 0,
+   "fa": 26,
+   "med": null
+  }
+ }
+}

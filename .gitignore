@@ -1,0 +1,8 @@
+*.elf
+*.o
+*.su
+*.map
+sim/host
+sim/host.exe
+__pycache__/
+.vscode/
