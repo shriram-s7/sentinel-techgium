@@ -1,0 +1,61 @@
+{
+ "normal_runs": 100,
+ "fa_normal": 3,
+ "fa_flags": [
+  2,
+  2,
+  2
+ ],
+ "fa_before_onset": 1,
+ "fault_free_days": 3205,
+ "by_rate": {
+  "0.05": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 11.71,
+   "days_max": 13.57,
+   "err_med": 0.59,
+   "err_max": 0.68
+  },
+  "0.1": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 5.49,
+   "days_max": 7.3,
+   "err_med": 0.55,
+   "err_max": 0.73
+  },
+  "0.15": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 4.09,
+   "days_max": 4.66,
+   "err_med": 0.61,
+   "err_max": 0.7
+  },
+  "0.2": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 2.93,
+   "days_max": 3.21,
+   "err_med": 0.59,
+   "err_max": 0.64
+  },
+  "0.3": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 1.98,
+   "days_max": 2.21,
+   "err_med": 0.59,
+   "err_max": 0.66
+  },
+  "0.5": {
+   "caught": 10,
+   "of": 10,
+   "days_med": 1.21,
+   "days_max": 1.38,
+   "err_med": 0.61,
+   "err_max": 0.69
+  }
+ }
+}

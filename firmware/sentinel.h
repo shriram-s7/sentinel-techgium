@@ -22,24 +22,41 @@ typedef struct {
     int16_t  sens_cC;    /* external sensor value (valid only if bus_ok) */
     uint16_t cur_cmA;    /* rail current from INA219 */
     uint16_t vdd_mV;     /* from VREFINT */
-    uint8_t  bus_ok;     /* 1 = I2C transaction ACKed and completed */
+    uint8_t  bus_ok;     /* 1 = every I2C transaction this sample ACKed and completed */
+    uint8_t  sens_ok;    /* external sensor value is valid */
+    uint8_t  cur_ok;     /* current value is valid (INA219 read succeeded) */
 } sn_sample_t;
+
+/* learned baseline, saved to flash by the app so a reset during a fault
+   does not re-learn the fault as "normal" */
+typedef struct {
+    int16_t res_mu, res_sd, cur_mu, cur_sd;
+    int32_t dvar_base, die_slow;
+    uint16_t magic, crc;
+} sn_baseline_t;
+
+/* reset causes the app passes in at boot (reported in the digest) */
+#define RST_WATCHDOG 0x40u
+#define RST_POWER    0x80u
 
 /* 16-byte digest sent to the fleet gateway */
 typedef struct __attribute__((packed)) {
     uint16_t node_id;
-    uint8_t  health;        /* current health byte */
-    uint8_t  latched;       /* every flag seen since last report */
+    uint8_t  health;          /* current health byte */
+    uint8_t  seen;            /* bits 0-5: flags seen since last report, 6: watchdog reset, 7: power reset */
     uint32_t uptime_s;
-    uint32_t last_fault_s;
-    int8_t   die_C;
-    uint8_t  vdd_div16;
-    uint16_t crc;
+    uint16_t last_fault_min;  /* minutes since last confirmed fault, 0xFFFF = none */
+    int16_t  sens_cC;         /* latest sensor value, 0.01 degC */
+    int16_t  resid_cC;        /* (sensor - chip) minus learned normal: lets the gateway trend drift */
+    uint16_t crc;             /* CRC-16 over the first 14 bytes */
 } sn_digest_t;
 
 void    sn_init(void);
 uint8_t sn_step(const sn_sample_t *s);       /* call once per sample, returns health byte */
 uint8_t sn_bus_recover_requested(void);       /* app performs I2C bus reset when 1 */
 void    sn_digest(sn_digest_t *d, uint16_t node_id);
+uint8_t sn_baseline_get(sn_baseline_t *b);       /* 1 if a learned baseline exists */
+uint8_t sn_baseline_set(const sn_baseline_t *b); /* 1 if accepted (magic + CRC ok) */
+void    sn_note_reset(uint8_t rst_bits);
 uint8_t sn_memory_check_step(void);           /* incremental flash CRC + stack canary */
 #endif

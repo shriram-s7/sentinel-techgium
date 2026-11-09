@@ -14,12 +14,12 @@ def call(fn,r0=0):
     mu.emu_start(sym[fn]|1, RET); return cnt[0]
 call('sn_init'); buf=0x20001000; st=[]; mem=[]
 random.seed(1)
-for t in range(600):
+for t in range(1000):
     ok = 0 if 400<=t<420 else 1
     die=2850+int(random.gauss(0,25)); sens=2700+int(random.gauss(0,8))+(t>300)*(t-300)*3
-    mu.mem_write(buf, struct.pack('<hhHHB', die, sens, 1200+int(random.gauss(0,5)), 3300, ok))
+    mu.mem_write(buf, struct.pack('<hhHHBBB', die, sens, 1200+int(random.gauss(0,5)), 3300, ok, 1, ok))
     n=call('sn_step',buf); 
-    if t>=120: st.append(n)
+    if t>=420: st.append(n)
     mem.append(call('sn_memory_check_step'))
 print('sn_step instr: avg %.0f max %d'%(sum(st)/len(st),max(st)))
 print('mem_check instr: avg %.0f max %d'%(sum(mem)/len(mem),max(mem)))

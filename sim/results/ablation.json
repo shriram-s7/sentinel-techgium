@@ -1,0 +1,26 @@
+{
+ "Fixed thresholds on raw readings": {
+  "fa": 27,
+  "heat": 21,
+  "drift": 14,
+  "early": 14
+ },
+ "Threshold on (sensor \u2212 chip)": {
+  "fa": 0,
+  "heat": 30,
+  "drift": 21,
+  "early": 0
+ },
+ "CUSUM on the sensor alone": {
+  "fa": 30,
+  "heat": 11,
+  "drift": 17,
+  "early": 25
+ },
+ "Sentinel (both + CUSUM + state machine)": {
+  "fa": 0,
+  "heat": 30,
+  "drift": 30,
+  "early": 0
+ }
+}
