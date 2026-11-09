@@ -6,3 +6,4 @@ sim/host
 sim/host.exe
 __pycache__/
 .vscode/
+sim/longsim

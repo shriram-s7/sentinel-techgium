@@ -2,16 +2,16 @@
 
 TECHgium 2026 (10th edition), Challenge 40: Self-Diagnosing Edge Devices. PID TG0922825.
 
-A small firmware layer for low-end MCUs (STM32G0, Cortex-M0+). Each sample (1 Hz) it checks the
-board, the external sensor, the I²C bus, the supply current and its own flash, and returns a
-1-byte health code that travels with every reading. It needs no cloud connection.
+A small firmware layer for low-end MCUs (STM32G0, Cortex-M0+). Every sample (1 Hz) it checks the
+board temperature against an external NTC sensor, the I²C bus, the MCU's supply current and its own
+flash, and returns a 1-byte health code that travels with every reading. No cloud needed.
 
-## What is in here
+## Layout
 
 | Folder | Contents |
 |---|---|
-| `firmware/` | `sentinel.c/.h` (the self-diagnosis module), `main.c` (minimal STM32G030 sensor node used for the A/B footprint build), `g030.ld` |
-| `sim/` | `host.c` runs the same `sentinel.c` on a PC; `sim.py` generates fault and normal runs and scores them |
+| `firmware/` | `sentinel.c/.h` (self-diagnosis), `main.c` (STM32G030 node: NTC on ADC, INA219 on I²C, watchdog, baseline saved to flash), `g030.ld` |
+| `sim/` | `host.c` / `longsim.c` run the same `sentinel.c` on a PC; `sim.py` (short fault runs), `ablation.py`, `longrun.py` (30-day runs) |
 | `tools/` | `emu.py` counts instructions per call by running the compiled ARM code in Unicorn |
 | `docs/` | presentation deck and figures |
 
@@ -21,25 +21,37 @@ board, the external sensor, the I²C bus, the supply current and its own flash, 
 |---|---|---|---|---|---|---|---|
 | meaning | state (00 healthy, 01 suspect, 10 confirmed, 11 degraded) | memory | power | bus | noise | drift | heat |
 
-## Build and reproduce
+## Reproduce
 
 ```bash
-cd firmware && make          # needs arm-none-eabi-gcc; prints size of base vs diag build
-cd ../sim && make run        # needs gcc + python3; 30 runs per fault type, seed in sim.py
+cd firmware && make                     # arm-none-eabi-gcc; size of base vs diag build
+cd ../sim && make run                   # gcc + python3
 cd ../tools && pip install unicorn pyelftools && python3 emu.py
 ```
 
-## Current results (simulation, not hardware yet)
+## Results so far (simulation, not hardware yet)
 
-Measured with arm-none-eabi-gcc 13.2, `-Os`, and a fresh simulation seed (777) not used for tuning.
+Footprint, arm-none-eabi-gcc 13.2 `-Os`, diag build minus base build:
 
 | | Value |
 |---|---|
-| Flash added | 1,736 B (diag build minus base build) |
-| RAM added | 144 B static + 56 B peak stack |
-| Instructions per second | about 6.6k (sn_step ≈ 545, memory CRC chunk ≈ 6,000) |
-| Heat / noise / bus / drift / power caught | 30 / 27 / 30 / 30 / 29 out of 30 |
-| False alarms | 0 in 30 normal runs and in the time before every fault (about 18 h) |
+| Flash | +2,384 B code (7.3% of 32 KB); the 24 B baseline is stored in one flash page |
+| RAM | +164 B static, about +96 B stack at peak (3.2% of 8 KB) |
+| CPU | about 6.6k instructions per second (estimate; to be timed with a GPIO toggle) |
 
-Not yet done: hardware runs, current measurement with diagnostics on vs off, flash event log,
-fallback-sensor and reduced-sampling recovery actions.
+Short runs (seed 2027, not used for tuning), 30 per type, first flag raised:
+
+| Injected | Caught | First flag correct | Median time |
+|---|---|---|---|
+| Heat | 30/30 | 28 (2 first flagged as drift) | 27 s |
+| Drift | 30/30 | 30 | 80 s |
+| Noise | 30/30 | 30 | 8 s |
+| Bus (hard or 12–62% intermittent) | 30/30 | 30 | 2 s |
+| Power | 28/30 | 28 (missed +1.0 mA steps) | 9 s |
+| Normal | 0 false alarms | | |
+
+30-day runs (100 normal, 60 slow drift at 0.05–0.5 °C/day): every drift flagged once the sensor was
+about 0.6 °C off (worst 0.73 °C); 4 false drift alarms in 3,205 node-days.
+
+Not done yet: hardware runs, current measurement (bench meter), flash event log, the non-bus
+recovery actions.

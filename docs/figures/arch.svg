@@ -31,15 +31,16 @@
 <text x="76" y="939.0" font-size="30" fill="#5b6475">flash CRC, stack, resets</text>
 <rect x="406" y="260" width="322" height="710" rx="16" fill="#fff" stroke="#c9ced8" stroke-width="2.5"/>
 <text x="430" y="320" font-size="34" font-weight="700" fill="#1b1f2a">Learns “normal”</text>
-<text x="430" y="364" font-size="30" font-weight="400" fill="#5b6475">first 2 minutes</text>
-<text x="430" y="430" font-size="34" font-weight="700" fill="#1b1f2a">Running average</text>
-<text x="430" y="474" font-size="34" font-weight="700" fill="#1b1f2a">and spread</text>
-<text x="430" y="518" font-size="30" font-weight="400" fill="#5b6475">3 numbers per signal</text>
-<text x="430" y="584" font-size="34" font-weight="700" fill="#1b1f2a">Slow-drift counter</text>
-<text x="430" y="628" font-size="30" font-weight="400" fill="#5b6475">(CUSUM) catches a</text>
-<text x="430" y="672" font-size="30" font-weight="400" fill="#5b6475">creeping sensor</text>
-<text x="430" y="738" font-size="34" font-weight="700" fill="#1b1f2a">Integer maths only</text>
-<text x="430" y="782" font-size="30" font-weight="400" fill="#5b6475">no ML model</text>
+<text x="430" y="364" font-size="30" font-weight="400" fill="#5b6475">2 min after warm-up,</text>
+<text x="430" y="408" font-size="30" font-weight="400" fill="#5b6475">then kept in flash</text>
+<text x="430" y="474" font-size="34" font-weight="700" fill="#1b1f2a">Running average</text>
+<text x="430" y="518" font-size="34" font-weight="700" fill="#1b1f2a">and spread</text>
+<text x="430" y="562" font-size="30" font-weight="400" fill="#5b6475">3 numbers per signal</text>
+<text x="430" y="628" font-size="34" font-weight="700" fill="#1b1f2a">Slow-drift counter</text>
+<text x="430" y="672" font-size="30" font-weight="400" fill="#5b6475">(CUSUM) catches a</text>
+<text x="430" y="716" font-size="30" font-weight="400" fill="#5b6475">creeping sensor</text>
+<text x="430" y="782" font-size="34" font-weight="700" fill="#1b1f2a">Integer maths only</text>
+<text x="430" y="826" font-size="30" font-weight="400" fill="#5b6475">no ML model</text>
 <rect x="758" y="260" width="322" height="710" rx="16" fill="#fff" stroke="#c9ced8" stroke-width="2.5"/>
 <text x="782" y="320" font-size="34" font-weight="700" fill="#1b1f2a">Is it me or</text><text x="782" y="362" font-size="34" font-weight="700" fill="#1b1f2a">the room?</text>
 <line x1="782" y1="376" x2="1056" y2="376" stroke="#e5e8ee" stroke-width="2"/>
@@ -77,7 +78,7 @@
 <text x="1484" y="545" font-size="34" font-weight="700" fill="#1b1f2a">Recover</text>
 <text x="1484" y="590" font-size="30" fill="#5b6475">reset the I²C bus</text>
 <text x="1484" y="630" font-size="30" fill="#5b6475">slow the sampling</text>
-<text x="1484" y="670" font-size="30" fill="#5b6475">fall back to chip temp</text>
+<text x="1484" y="670" font-size="30" fill="#5b6475">chip temp − offset</text>
 <rect x="1462" y="740" width="322" height="230" rx="16" fill="#fff" stroke="#2e9e5b" stroke-width="3.5"/>
 <text x="1484" y="800" font-size="34" font-weight="700" fill="#1b1f2a">Tag every reading</text>
 <text x="1484" y="845" font-size="30" fill="#5b6475">1-byte health code</text>

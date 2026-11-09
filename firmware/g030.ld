@@ -1,4 +1,4 @@
-MEMORY { FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 32K
+MEMORY { FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 30K   /* last 2 KB page keeps the baseline */
          RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 8K }
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 SECTIONS {
